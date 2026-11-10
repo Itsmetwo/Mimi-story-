@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mimi – Human vs Machine Translation</title>
+<style>
+:root{--bg:#faf6ef;--card:#fff;--ink:#2a2622;--mute:#6e665c;--line:#e6dccb;--hl:#ffe08a;--hl2:#ffc9b8;--acc:#b5482a;--ok:#2f7d57;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1a17;--card:#27231f;--ink:#f0e9dd;--mute:#a89f91;--line:#3d372f;--hl:#6b5514;--hl2:#6e3a2b;--acc:#ff9b7a;--ok:#6fd0a0}}
+:root[data-theme="dark"]{--bg:#1c1a17;--card:#27231f;--ink:#f0e9dd;--mute:#a89f91;--line:#3d372f;--hl:#6b5514;--hl2:#6e3a2b;--acc:#ff9b7a;--ok:#6fd0a0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.7}
+main{max-width:980px;margin:0 auto;padding:28px 18px 60px}
+h1{font-size:2rem;margin:0 0 4px}
+.sub{color:var(--mute);font-family:system-ui,sans-serif;font-size:.95rem;margin:0 0 24px}
+.hint{font-family:system-ui,sans-serif;font-size:.9rem;background:var(--card);border:1px dashed var(--line);border-radius:10px;padding:10px 14px;margin-bottom:22px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+.row p{margin:0}
+.lang{display:block;font-family:system-ui,sans-serif;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:4px}
+.en{color:var(--ink);opacity:.92}
+.hl{background:var(--hl);border-radius:4px;padding:0 3px;cursor:pointer;border-bottom:2px solid var(--acc)}
+.hl.b{background:var(--hl2)}
+.hl:hover,.hl:focus{outline:2px solid var(--acc)}
+.panel{display:none;font-family:system-ui,sans-serif;background:var(--card);border:2px solid var(--acc);border-radius:14px;padding:16px 20px;margin:-4px 0 14px}
+.panel.show{display:block}
+.panel h3{margin:0 0 10px;font-size:1.05rem}
+.panel .tag{display:inline-block;font-size:.7rem;font-weight:700;color:#fff;background:var(--acc);border-radius:6px;padding:1px 8px;margin-right:6px}
+.panel .tag.ok{background:var(--ok)}
+.panel .item{margin:10px 0;font-size:.95rem}
+.panel .x{float:right;background:none;border:0;color:var(--mute);font-size:1.3rem;cursor:pointer}
+.q{background:var(--card);border-left:6px solid var(--acc);border-radius:10px;padding:16px 20px;margin:26px 0}
+.q h2{font-size:1rem;font-family:system-ui,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--acc);margin:0 0 8px}
+.q p{margin:4px 0;font-size:1.1rem}
+.concl{background:var(--ink);color:var(--bg);border-radius:14px;padding:20px 24px}
+.concl h2{margin:0 0 8px;font-size:1.2rem}
+.concl p{margin:0}
+@media (max-width:720px){.row{grid-template-columns:1fr}h1{font-size:1.6rem}}
+</style>
+</head>
+<body>
+<main>
+<h1>Mimi và hành trình “mài sắt nên kim”</h1>
+<p class="sub">Human vs. machine translation · Con người và máy dịch</p>
+<div class="hint">💡 Hover or tap the <span class="hl">highlighted</span> phrases (in Vietnamese or English) to see what it really means, what the machine said, and why it went wrong.</div>
+
+<div class="row">
+<p lang="vi"><span class="lang">Tiếng Việt</span><span class="hl" data-k="a" tabindex="0" role="button">Mimi với biệt danh đội sổ lớp suốt 11 năm đi học</span> đã quyết tâm lao đầu vào học hành thật chăm chỉ. Vào kì nghỉ hè chuẩn bị lên lớp 12, trong khi các bạn lao lực chuẩn bị cho kì thi đầu vào đại học, Mimi lại vẫn đang lọ mọ ôn tập lại kiến thức cấp 2.</p>
+<p class="en" lang="en"><span class="lang">English (machine)</span><span class="hl" data-k="a" tabindex="0" role="button">Mimi, who had been nicknamed the bottom student in her class</span> throughout her 11 years of schooling, finally decided to throw herself into studying seriously. During the summer vacation before entering her final year of high school, while her classmates were working hard to prepare for university entrance exams, Mimi was still struggling to review basic knowledge from middle school.</p>
+</div>
+<div class="panel" id="p-a"></div>
+
+<div class="row">
+<p lang="vi">Với sự nỗ lực không ngừng thì không lâu sau Mimi đã lấy được điểm 10 môn Toán trong đời của mình và nhận lời khen từ giáo viên. Trang người học rất giỏi toán lại chỉ được 9 điểm trong cùng một bài kiểm tra, không cam lòng việc Mimi hơn điểm mình, Trang buột miệng thốt lên: “chẳng qua là chó ngáp phải ruồi thôi!”.</p>
+<p class="en" lang="en">Thanks to her relentless efforts, it wasn’t long before she achieved her very first perfect score in Mathematics and received praise from her teacher. Trang, who was known as an excellent math student, had only scored 9 out of 10 on the same test. Unable to accept the fact that Mimi had scored higher than her, Trang blurted out, “She just got lucky! Even a blind squirrel finds a nut sometimes!”</p>
+</div>
+
+<div class="row">
+<p lang="vi">Mimi dù nghe thấy lời mỉa mai nhưng <span class="hl b" data-k="b" tabindex="0" role="button">vẫn xem như gió thoảng qua tai</span> và nỗ lực phấn đấu cho bài kiểm tra vào đại học. Sau một thời gian dài nỗ lực thì ngày kiểm tra cũng đã kết thúc và hôm nay có kết quả, Mimi đứng ngồi không yên đợi kết quả.</p>
+<p class="en" lang="en">Although Mimi heard the sarcastic remark, <span class="hl b" data-k="b" tabindex="0" role="button">she simply let it go</span> and continued working hard to prepare for the university entrance exam. After a long period of hard work and dedication, the exam day finally came and passed. Today was the day the results were announced, and Mimi could hardly sit still as she anxiously waited for her results.</p>
+</div>
+<div class="panel" id="p-b"></div>
+
+<div class="row">
+<p lang="vi">Và kết quả là cô đã đỗ vào trường mình mong muốn dù điểm không cao. Quả thực là có công mài sắt có ngày nên kim.</p>
+<p class="en" lang="en">In the end, she had been accepted into the university she had always dreamed of, even though her score wasn’t particularly high. Indeed, where there’s a will, there’s a way!</p>
+</div>
+
+<div class="q">
+<h2>Câu hỏi · Question</h2>
+<p lang="vi">Mimi có mài sắt thành kim giống như “có công mài sắt có ngày nên kim” không?</p>
+<p class="en" lang="en">Does Mimi grind iron into a needle like “where there’s a will, there’s a way”?</p>
+</div>
+
+<div class="concl">
+<h2>My conclusion</h2>
+<p>A human can understand the cultural context, subtle nuances, and implied meanings behind expressions in a story. In contrast, a machine may translate words literally without fully understanding the speaker’s intentions, resulting in a loss of emotion, context, and deeper meaning.</p>
+</div>
+</main>
+
+<script>
+var D={
+a:{t:"“Mimi, who had been nicknamed the bottom student in her class” · Multiple meanings",
+real:"Mimi simply ranked last in her class for 11 years. Nobody actually gave her a nickname.",
+mach:"“Mimi, who had been nicknamed the bottom student in her class…”",
+why:"The Vietnamese phrase has more than one possible reading, and the machine chose the wrong one. In English, “nicknamed” suggests that other people called her that name, so it sounds as if she was bullied for being at the bottom of the class."},
+b:{t:"“She simply let it go” · Lost emotion",
+real:"Mimi heard the cruel remark and truly did not let it affect her. It passed by like a breeze, and she kept her focus and determination.",
+mach:"“…she simply let it go and continued working hard…”",
+why:"The nuance of “let it go” is softer than what the author wants to convey. The machine kept the basic meaning but lost the emotion: the strength, calm and resolve in “gió thoảng qua tai”."}
+};
+var panels={a:document.getElementById('p-a'),b:document.getElementById('p-b')};
+function fill(k){var d=D[k],p=panels[k];
+p.innerHTML='<button class="x" aria-label="Close">×</button><h3>'+d.t+'</h3>'+
+'<div class="item"><span class="tag ok">a</span><b>What it really means:</b> '+d.real+'</div>'+
+'<div class="item"><span class="tag">b</span><b>What the machine said:</b> '+d.mach+'</div>'+
+'<div class="item"><span class="tag">c</span><b>Why the machine got it wrong:</b> '+d.why+'</div>';
+p.querySelector('.x').onclick=function(){p.classList.remove('show')};}
+function show(k){for(var x in panels)panels[x].classList.remove('show');fill(k);panels[k].classList.add('show');}
+document.querySelectorAll('.hl').forEach(function(e){
+var k=e.dataset.k;
+e.addEventListener('click',function(){panels[k].classList.contains('show')?panels[k].classList.remove('show'):show(k)});
+e.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();e.click()}});
+e.addEventListener('mouseenter',function(){if(matchMedia('(hover:hover)').matches)show(k)});
+});
+</script>
+</body>
+</html>
